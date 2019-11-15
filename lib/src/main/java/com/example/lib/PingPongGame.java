@@ -11,46 +11,46 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 public class PingPongGame extends JFrame implements KeyListener, ActionListener {
-    // ¹CÀ¸µe­±¤j¤p
+    // éŠæˆ²ç•«é¢å¤§å°
     final int SCREEN_WIDTH = 400;
     final int SCREEN_HEIGHT = 400;
 
-    // ²yªºªì©l¦ì¸m
+    // çƒçš„åˆå§‹ä½ç½®
     final int INIT_Y_POS = SCREEN_HEIGHT / 2;
     final int INIT_X_POS = SCREEN_WIDTH / 2;
 
-    // À»²yªO¤lªº¤j¤p
+    // æ“Šçƒæ¿å­çš„å¤§å°
     final int PAD_WIDTH = 20;
     final int PAD_HEIGHT = 100;
     final int PLAYER_NUM = 2;
-    final int PAD_OFFSET = 10;
+    final int PAD_OFFSET = 10;//Padé›¢é‚Šç·šè·é›¢
 
-    // §ó·s²y¦ì¸mªº­p®É¾¹
+    // æ›´æ–°çƒä½ç½®çš„è¨ˆæ™‚å™¨
     Timer ballTimer;
 
-    // ²y²¾°Êªº³t«×
+    // çƒç§»å‹•çš„é€Ÿåº¦
     int ballSpeedX = 1, ballSpeedY = 1;
     final int DELAY_MS = 10;
 
-    // ²yªº¦ì¸m
+    // çƒçš„ä½ç½®
     int ballPosX = INIT_X_POS;
     int ballPosY = INIT_Y_POS;
 
-    // ²yªº¤j¤p
+    // çƒçš„å¤§å°
     final int BALL_RADIUS = 20;
 
-    // ª±®a²¾°ÊªO¤lªº³t«×
+    // ç©å®¶ç§»å‹•æ¿å­çš„é€Ÿåº¦
     int playerSpeedY = 20;
 
-    // ª±®aªO¤lªº¦ì¸m
+    // ç©å®¶æ¿å­çš„ä½ç½®
     int[] playerPosX = new int[PLAYER_NUM];
     int[] playerPosY = new int[PLAYER_NUM];
 
-    // ª±®a¤À¼Æ
+    // ç©å®¶åˆ†æ•¸
     int[] playerScore = new int[PLAYER_NUM];
 
     public PingPongGame() {
-        setTitle("¹CÀ¸°òÂ¦-¥â¥ã²y");
+        setTitle("éŠæˆ²åŸºç¤-ä¹’ä¹“çƒ");
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +64,7 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
 
     private void initBallTimer() {
         ballTimer = new Timer(DELAY_MS, this);
-        ballTimer.setInitialDelay(190);
+        ballTimer.setInitialDelay(1);
         ballTimer.start();
     }
 
@@ -88,7 +88,7 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
     }
 
     public void paint(Graphics g) {
-        super.paint(g);
+        super.paint(g);         //çˆ¶é¡åˆ¥Windowçš„paint
 
         drawPlayerPad(g);
         drawBall(g);
@@ -118,6 +118,11 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
     }
 
     @Override
+    public void keyTyped(KeyEvent keyEvent) {
+
+    }
+
+    @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -139,7 +144,12 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
         repaint();
     }
 
-    // ÀË¬dªO¤l¬O§_¶W¥X¹CÀ¸µe­±ªº½d³ò
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+
+    }
+
+    // æª¢æŸ¥æ¿å­æ˜¯å¦è¶…å‡ºéŠæˆ²ç•«é¢çš„ç¯„åœ
     private void checkPadPosRange() {
         for (int i = 0; i < PLAYER_NUM; i++) {
             if (playerPosY[i] < 0) playerPosY[i] = 0;
@@ -148,20 +158,13 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         ballPosX += ballSpeedX;
         ballPosY += ballSpeedY;
 
-        // ²y¬O§_¸I¨ì¹CÀ¸µe­±Ãä¬É
+        // çƒæ˜¯å¦ç¢°åˆ°éŠæˆ²ç•«é¢é‚Šç•Œ
         if (ballPosX >= SCREEN_WIDTH - BALL_RADIUS || ballPosX <= 0) {
             ballSpeedX = -ballSpeedX;
 
@@ -175,14 +178,14 @@ public class PingPongGame extends JFrame implements KeyListener, ActionListener 
         if (ballPosY >= SCREEN_HEIGHT - BALL_RADIUS || ballPosY <= BALL_RADIUS)
             ballSpeedY = -ballSpeedY;
 
-        // ²y¬O§_¸I¨ì¥ªÃäªO¤l
+        // çƒæ˜¯å¦ç¢°åˆ°å·¦é‚Šæ¿å­
         if (ballPosX <= playerPosX[0] + PAD_WIDTH && ballPosX >= playerPosX[0] &&
-                ballPosY <= playerPosY[0] + PAD_HEIGHT && ballPosY >= playerPosY[0])
+            ballPosY <= playerPosY[0] + PAD_HEIGHT && ballPosY >= playerPosY[0])
             ballSpeedX = -ballSpeedX;
 
-        // ²y¬O§_¸I¨ì¥kÃäªO¤l
+        // çƒæ˜¯å¦ç¢°åˆ°å³é‚Šæ¿å­
         if (ballPosX <= playerPosX[1] - BALL_RADIUS + PAD_WIDTH && ballPosX >= playerPosX[1] - BALL_RADIUS &&
-                ballPosY <= playerPosY[1] + PAD_HEIGHT && ballPosY >= playerPosY[1])
+            ballPosY <= playerPosY[1] + PAD_HEIGHT && ballPosY >= playerPosY[1])
             ballSpeedX = -ballSpeedX;
 
         this.repaint();//https://yunlinsong.blogspot.com/2016/10/java.html
