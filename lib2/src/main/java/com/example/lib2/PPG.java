@@ -18,7 +18,7 @@ public class PPG extends JPanel implements KeyListener, ActionListener {
     private int InitialPad_Width = 20;
     private int InitialPad_Height = 100;
     final int PLAYER_NUM = 2;
-    final int PAD_OFFSET = 10;
+    final int PAD_OFFSET = 12;
     int playerSpeedY = 20;
     int[] playerPosX = new int[PLAYER_NUM];
     int[] playerPosY = new int[PLAYER_NUM];
@@ -165,7 +165,7 @@ public class PPG extends JPanel implements KeyListener, ActionListener {
         Ball_PosY += ballSpeedY;
 
         // 球是否碰到遊戲畫面邊界
-        if (Ball_PosX >= SCREEN_WIDTH - BALL_RADIUS || Ball_PosX <= 0) {
+        if (Ball_PosX >= SCREEN_WIDTH - BALL_RADIUS-5 || Ball_PosX <= 0) {
             ballSpeedX = -ballSpeedX;
 
             if (Ball_PosX <= 0) {
@@ -175,7 +175,7 @@ public class PPG extends JPanel implements KeyListener, ActionListener {
             }
         }
 
-        if (Ball_PosY >= SCREEN_HEIGHT - BALL_RADIUS || Ball_PosY <= BALL_RADIUS)
+        if (Ball_PosY >= SCREEN_HEIGHT - BALL_RADIUS-35 || Ball_PosY <= BALL_RADIUS-20)
             ballSpeedY = -ballSpeedY;
 
         // 球是否碰到左邊板子
